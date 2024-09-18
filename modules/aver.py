@@ -85,7 +85,7 @@ def work(sizearr, noise, win_size, reduction_factor):
     else:
         NROWS = 6
 
-    fig, axes = plt.subplots(nrows=NROWS, ncols=1, figsize=(24, 18))
+    fig, axes = plt.subplots(nrows=NROWS, ncols=1, figsize=(24, 16))
 
     # Определение общих пределов для оси y
     y_min = min(min(data), min(data_noise), min(davg))
@@ -129,33 +129,6 @@ def work(sizearr, noise, win_size, reduction_factor):
         ax.minorticks_on()
         ax.grid(True)
 
-    '''
-    for i, ax in enumerate(axes):
-        if i < 3:
-            if i != 0:
-                ax.plot(x, dt[i], label=lb[i], linestyle='none', marker=mark[i])
-            else:
-                ax.plot(x, dt[i], label=lb[i], linestyle='none', marker=mark[i])
-            
-            if i != 2:
-                ax.set_title(lb[i])
-            else:    
-                ax.set_title(lb[i]+" "+str(win_size))
-        else:          
-            ax.plot(xh,             dt[3],          label=lb[3]+" "+str(reduction_factor))#, marker=mark[3]) 
-            ax.plot(x,              dt[2],          label=lb[2], linestyle='none', marker=mark[2])            
-            ax.plot(x_data_small,   data_small, 'o',label="Прореженные данные")
-            ax.plot(xh,             y_spline,       label=lb[5],  marker=mark[5])
-            ax.set_title("Combi: "+" "+lb[2]+" точками и "+lb[3]+" сплошной линией")                    
-
-        ax.set_ylim(y_min, y_max)           
-        ax.set_xlabel('Индекс')
-        ax.set_ylabel('Значение')
-        ax.legend()
-        ax.minorticks_on()
-        ax.grid(True)
-    '''
-
     fig.tight_layout()
     plt.savefig('combined_plots.png')    
     
@@ -164,10 +137,8 @@ if __name__ == '__main__':
     k = 0.5         # коэффициент зашумления
     sizearr = 240   # размер исходного массива
     reduct = 12     # прореживание через reduct точек
-    win = 5
-    #work(sizearr, k, win, reduct)
-    """
-    """
+    win = 5         # размер окна скользящего среднего
+
     # меняем окно win сглаживания ск.среднего
     while True:  
         for win in range(3, 19, 3):
@@ -175,8 +146,7 @@ if __name__ == '__main__':
             time.sleep(5)
             if win > 19:
                 break        
-    """
-    """                            
+                           
 
 
     """
@@ -201,14 +171,4 @@ if __name__ == '__main__':
     '|' - вертикальная линия 
     '_' - горизонтальная линия
     lb = ('Идеальный массив','Зашумленный массив','Скользящее среднее','Интерполяция')
-
-    # Визуализация
-    fig, ax = plt.subplots(figsize=(24, 6))
-    ax.plot(xh, y_cubic, label="Кубический сплайн")https://fadeevlecturer.github.io/python_lectures/notebooks/scipy/interpolation_approx.html
-    ax.plot(np.arange(sizearr), data, '.', label="Исходные данные")
-    ax.plot(x_data_small, data_small, 'x', label="Прореженные данные")
-    ax.legend()
-    ax.set_title("Интерполяция кубическим сплайном")
-    plt.savefig('spline_transformation.png')
-    plt.show()    
-    """    
+    """  
